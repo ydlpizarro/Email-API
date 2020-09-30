@@ -20,7 +20,7 @@ namespace ApiEmail.Controllers
         {
             HttpResponseMessage httpResponseMessage;
             EmailBO emailBO;           
-
+            //EmailRepository emailRepository;
             try
             {
                 emailBO = new EmailBO();

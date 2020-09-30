@@ -4,6 +4,7 @@ using MimeKit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace ApiEmail.Repositories
@@ -13,7 +14,11 @@ namespace ApiEmail.Repositories
         public void Send(Email email)
         {
             MimeMessage mimeMessage;
-
+            Commons.From = "testereachr@gmail.com";
+            Commons.SmtpServer = "smtp.gmail.com";
+            Commons.Port = 465;
+            Commons.UserName = "testereachr";
+            Commons.Password = "11refa11";
             try
             {
                 mimeMessage = createMimeMessage(email);
@@ -48,7 +53,7 @@ namespace ApiEmail.Repositories
 
             return mimeMessage;
         }
-
+        
         private void sendServer(MimeMessage mimeMessage)
         {
             SmtpClient smtpClient;
@@ -56,7 +61,7 @@ namespace ApiEmail.Repositories
             try
             {
                 smtpClient = new SmtpClient();
-                smtpClient.ConnectAsync(Commons.SmtpServer, Commons.Port, true);
+                smtpClient.Connect(Commons.SmtpServer, Commons.Port, true);
                 smtpClient.AuthenticationMechanisms.Remove("XOAUTH2");
                 smtpClient.Authenticate(Commons.UserName, Commons.Password);
                 smtpClient.Send(mimeMessage);
